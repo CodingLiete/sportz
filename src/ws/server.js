@@ -23,6 +23,8 @@ export function attachWebSocketServer(server) {
     });
 
     wss.on("connection", async (socket, req) => {
+        socket.on("error", console.error);
+
         if (wsArcjet) {
             try {
                 const decision = await wsArcjet.protect(req);
@@ -62,8 +64,6 @@ export function attachWebSocketServer(server) {
         });
 
         sendJson(socket, { type: "welcome" });
-
-        socket.on("error", console.error);
     });
 
     const interval = setInterval(() => {

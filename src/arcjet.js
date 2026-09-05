@@ -1,4 +1,5 @@
 import arcjet, { detectBot, shield, slidingWindow } from "@arcjet/node";
+import { isSpoofedBot } from "@arcjet/inspect";
 
 const arcjetKey = process.env.ARCJET_KEY;
 
@@ -51,11 +52,9 @@ export function securityMiddleware() {
         try {
             const decision = await httpArcjet.protect(req);
 
-            const isSpoofedBot = decision.results.some(
-                (result) => result.reason.isSpoofedBot()
-            );
-
-            if (isSpoofedBot) {
+            const hasSpoofedBot = decision.results.some(isSpoofedBot);
+ 
+            if (hasSpoofedBot) {
                 return res.status(403).json({
                     error: "Forbidden."
                 });
