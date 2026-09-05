@@ -14,6 +14,8 @@
   "keywords": [],
   "type": "module",
   "dependencies": {
+    "@arcjet/inspect": "^1.11.0",
+    "@arcjet/node": "^1.11.0",
     "@neon/config": "^1.2.0",
     "@neon/env": "^1.2.0",
     "@neondatabase/serverless": "^1.1.0",
