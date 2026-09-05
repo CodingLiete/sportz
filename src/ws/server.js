@@ -27,8 +27,6 @@ export function attachWebSocketServer(server) {
             try {
                 const decision = await wsArcjet.protect(req);
 
-                // Un bot usurpé doit être refusé même s'il correspond
-                // à une catégorie présente dans la allow list.
                 const isSpoofedBot = decision.results.some(
                     (result) => result.reason.isSpoofedBot()
                 );
@@ -38,7 +36,6 @@ export function attachWebSocketServer(server) {
                     return;
                 }
 
-                // Conserver le comportement existant pour les autres refus.
                 if (decision.isDenied()) {
                     const code = decision.reason.isRateLimit()
                         ? 1013
